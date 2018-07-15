@@ -5,5 +5,5 @@ canvas.height = document.body.clientHeight;
 let seed = Math.floor(Math.random() * 10000);
 console.log('seed:', seed);
 let m = new Map(50, seed);
-let r = new Renderer(canvas);
+let r = new CanvasRenderer(canvas);
 r.renderMap(m);

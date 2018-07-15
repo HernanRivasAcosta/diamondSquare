@@ -1,4 +1,4 @@
-class Renderer
+class CanvasRenderer
 {
   constructor(canvas)
   {
@@ -19,15 +19,18 @@ class Renderer
 
     let d = side * 0.5 * map.size();
 
+    // Calculate the edges of the tile
     let minx = this._hw + x - y - side;
     let miny = (x + y) * 0.5 + this._hh - d;
     let maxx = this._hw + x + side - y;
     let maxy = (x + side * 2 + y) * 0.5 + this._hh - d;
 
+    // Avoid drawing tiles outside the screen
     if (maxx < 0 || minx > this._w ||
         maxy < 0 || miny > this._w)
       return;
 
+    // Draw the top of the tile.
     this._ctx.beginPath();
     this._ctx.moveTo(this._hw + x - y, miny - h);
     this._ctx.lineTo(maxx, (x + side + y) * 0.5 + this._hh - h - d);
@@ -35,6 +38,7 @@ class Renderer
     this._ctx.lineTo(minx, (x + y + side) * 0.5 + this._hh - h - d);
     this._ctx.lineTo(this._hw + x - y, miny - h);
     this._ctx.closePath();
+    // Select the colour based on the height
     if (h == 0)
       this._ctx.fillStyle = '#8ED6FF';
     else if (h < 4)
@@ -43,6 +47,7 @@ class Renderer
       this._ctx.fillStyle = '#708238';
     this._ctx.fill();
 
+    // Draw the edges of the tile so they don't just 'float' in the air
     if (h)
     {
       this._ctx.beginPath();
