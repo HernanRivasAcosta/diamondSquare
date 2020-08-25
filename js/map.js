@@ -33,8 +33,11 @@ class Map
 
   _generateTerrain()
   {
-    // Level the terrain (this also initialises the map array)
-    this._flatten();
+    // Initialises the map array
+    for (let i = 0; i < this._l; i++)
+    {
+      this._a[i] = 0;
+    }
 
     // Set the height of the centre of the map
     this._a[this._l >> 1] = this._prng.float() * 3 + 2;
@@ -43,7 +46,7 @@ class Map
     this._diamondSquare();
 
     // Turn it into an island by substracting the distance from the centre
-    this._lowerEdges();
+    this._decreaseElevationNearEdges();
 
     // A side effect of this function is that it turns all negative heights into
     // 0
@@ -67,8 +70,8 @@ class Map
   _squareStep(l)
   {
     let hl = l * 0.5;
-    for (let i = 0; i < this._size - 1; i += l)
-      for (let j = 0; j < this._size - 1; j += l)
+    for (let i = 0; i < this._size; i += l)
+      for (let j = 0; j < this._size; j += l)
       {
         this._average(true, i + hl, j, hl);
         this._average(true, i, j + hl, hl);
@@ -113,7 +116,7 @@ class Map
     return Math.sqrt(dc * dc + dr * dr) / this._size;
   }
 
-  _lowerEdges()
+  _decreaseElevationNearEdges()
   {
     for(let c = 0; c < this._size; c++)
       for(let r = 0; r < this._size; r++)
@@ -129,7 +132,7 @@ class Map
   {
     for (let i = 0; i < this._l; i++)
     {
-      this._a[i] = Math.max(0, this._a[i] || 0);
+      this._a[i] = Math.max(0, this._a[i]);
     }
   }
 

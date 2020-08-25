@@ -4,7 +4,7 @@ canvas.height = document.body.clientHeight;
 
 let seed = Math.floor(Math.random() * 10000);
 console.log('seed:', seed);
-let map = new Map(1000, seed);
+let map = new Map(100, seed);
 let renderer = new CanvasRenderer(canvas);
 
 let mouse = new MouseHandler(document);
